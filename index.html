@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oui l’Océan Paris - App</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#005ca8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accueil PWA</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2196f3">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+<style>
+body { font-family: Arial; text-align: center; margin: 2rem; }
+nav a { display: inline-block; margin: 10px; padding: 10px 20px; background: #2196f3; color: white; text-decoration: none; border-radius: 5px; }
+nav a:hover { background: #1976d2; }
+</style>
 </head>
-<body style="margin:0; padding:0; height:100vh;">
-  <iframe src="https://ouilocean.paris/" style="width:100%; height:100%; border:none;"></iframe>
+<body>
+<h1>Bienvenue sur la PWA Oui L’Océan</h1>
+<nav>
+  <a href="page1.html">Page 1</a>
+  <a href="page2.html">Page 2</a>
+</nav>
+<p>Cette page est préchargée et fonctionne hors-ligne.</p>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js")
+    .then(() => console.log("Service worker enregistré"))
+    .catch(err => console.error("Erreur SW :", err));
+}
+</script>
 </body>
 </html>

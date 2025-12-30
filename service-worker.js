@@ -7,23 +7,19 @@ const PRECACHE = [
   "icons/icon-512.png"
 ];
 
+// Préchargement des fichiers essentiels
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE))
   );
 });
 
-// Interception de toutes les requêtes
+// Gestion des requêtes vers la PWA
 self.addEventListener("fetch", event => {
-  event.respondWith(
-    fetch(event.request)
-      .catch(() => {
-        // Si hors-ligne et requête vers ouilocean.paris, renvoyer offline.html
-        if (event.request.url.startsWith("https://ouilocean.paris")) {
-          return caches.match("offline.html");
-        }
-        // Sinon, essayer de renvoyer depuis le cache
-        return caches.match(event.request);
-      })
-  );
+  // On intercepte uniquement les requêtes vers notre PWA
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match("offline.html"))
+    );
+  }
 });
